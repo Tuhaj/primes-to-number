@@ -1,38 +1,23 @@
-# question: are prime numbers showing positions of other prime numbers?
-# interesting prime numbers, do it. Are there any like this?
-require 'byebug'
-
-# other names "PrimesMask"
-
 class PrimesToNumber
   def initialize(last_number)
     @last_number = last_number
   end
 
-  def prime?(number)
+  def self.prime?(number)
     (2..Math.sqrt(number).floor).none? { |n| number % n == 0 }
   end
 
   def primes
-    (2..@last_number).select {|n| self.prime?(n) }
+    (2..@last_number).select {|n| self.class.prime?(n) }
   end
 
-  def primes_to_binary_number
-    self.select_bits(primes)
+  def mask
+    primes.reduce('') do |memo, prime|
+      memo += '0' * (prime - memo.size - 2) + '1'
+    end
   end
 
-  def select_bit(bit)
-    '1' + '0' * (bit -1)
-  end
-
-  def select_bits(array)
-    array.reduce("0") do |acc, number|
-      (acc.to_i(2) | select_bit(number).to_i(2)).to_s(2)
-    end.to_i(2)
+  def to_metaprime
+    self.mask.to_i(2)
   end
 end
-
-
-
-
-

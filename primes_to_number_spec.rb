@@ -7,13 +7,18 @@ describe 'PrimesToNumber' do
     expect(PrimesToNumber.new(100).primes).to eq([2,3,5,7,11,13,17,19,23,29,31,37,41,43,47,53,59,61,67,71,73,79,83,89,97])
   end
 
-  it 'returns number with selected bits' do
-    expect(PrimesToNumber.new(2).select_bits([1,2,3])).to eq(7)
-    expect(PrimesToNumber.new(2).select_bits([4])).to eq(8)
+  it 'returns prime mask' do
+    expect(PrimesToNumber.new(2).mask).to eq('1')
+    expect(PrimesToNumber.new(3).mask).to eq('11')
+    expect(PrimesToNumber.new(5).mask).to eq('1101')
+    expect(PrimesToNumber.new(7).mask).to eq('110101')
+    expect(PrimesToNumber.new(11).mask).to eq('1101010001')
   end
 
-  it 'returns primes mask as a decimal number' do
-    expect(PrimesToNumber.new(3).primes_to_binary_number).to eq(6) # 110 2 - yes, 3 - yes, 4 - no
-    expect(PrimesToNumber.new(5).primes_to_binary_number).to eq(13) # 1101 as 5 is a prime number
+  it 'returns number with selected bits' do
+    expect(PrimesToNumber.new(2).to_metaprime).to eq(1)
+    expect(PrimesToNumber.new(3).to_metaprime).to eq(3)
+    expect(PrimesToNumber.new(5).to_metaprime).to eq(13)
+    expect(PrimesToNumber.new(7).to_metaprime).to eq(53)
   end
 end
